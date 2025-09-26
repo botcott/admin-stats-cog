@@ -4,6 +4,14 @@ import datetime
 import discord
 from discord.ext import commands
 
+async def form(count):
+    if count % 10 == 1 and count % 100 != 11:
+        return f"{count} ахелп"
+    elif 2 <= count % 10 <= 4 and (count % 100 < 10 or count % 100 >= 20):
+        return f"{count} ахелпа"
+    else:
+        return f"{count} ахелпов"
+
 async def check_embed_is_admin_only(embed, ckey):
     text_to_check = []
 
@@ -23,7 +31,7 @@ async def check_embed_is_admin_only(embed, ckey):
     return True
 
 async def check_embed(embed, ckey):
-    if embed.description and ckey and ":outbox_tray:" in embed.description.lower():
+    if ckey in embed.description.lower() and ":outbox_tray:" in embed.description.lower():
         return True
     return False
 
@@ -70,16 +78,16 @@ class AdminStatsCog(commands.Cog):
         now = datetime.datetime.now()
         date = now.strftime("%m.%Y")
 
-        answer = discord.Embed(title=f"{ctx.author.name} | {channel.name} | {date}", colour=0x41f096)
+        answer = discord.Embed(title=f"{ckey} | {channel.name} | {date}", colour=0x41f096)
 
         answer.add_field(name="Общее количество", inline=False,
-            value=f"Было найдено {all_ahelps_with_mention} ахелпов"
+            value=f"Было найдено {await form(all_ahelps_with_mention)}"
         )
         answer.add_field(name="Без Admin Only", inline=False,
-            value=f"Было найдено {ahelps_without_admin_only} ахелпов"
+            value=f"Было найдено {await form(ahelps_without_admin_only)}"
         )
         answer.add_field(name="Admin Only", inline=False,
-            value=f"Было найдено {ahelps_with_admin_only} ахелпов"
+            value=f"Было найдено {await form(ahelps_with_admin_only)}"
         )
 
         await ctx.respond(embed=answer, ephemeral=True)
