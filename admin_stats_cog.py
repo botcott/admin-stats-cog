@@ -23,15 +23,8 @@ async def check_embed_is_admin_only(embed, ckey):
     return True
 
 async def check_embed(embed, ckey):
-    if embed.title and ckey in embed.title.lower():
+    if embed.description and ckey and ":outbox_tray:" in embed.description.lower():
         return True
-    if embed.description and ckey in embed.description.lower():
-        return True
-    for field in embed.fields:
-        if field.name and ckey in field.name.lower():
-            return True
-        if field.value and ckey in field.value.lower():
-            return True
     return False
 
 
