@@ -25,14 +25,18 @@ async def check_embed_is_admin_only(embed, ckey):
         lines = text.splitlines()
         for line in lines:
             lower_line = line.lower()
-            if "admin only" in lower_line and ckey in lower_line:
+            if "admin only" in lower_line and ckey.lower() in lower_line:
                 return False
 
     return True
 
 async def check_embed(embed, ckey):
-    if ckey in embed.description.lower() and ":outbox_tray:" in embed.description.lower():
-        return True
+    lines = embed.description.lower().splitlines()
+    for line in lines:
+        lower_line = line.lower()
+        if ckey.lower() in lower_line and ":outbox_tray:" in lower_line:
+            return True
+            
     return False
 
 
