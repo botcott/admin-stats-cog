@@ -25,7 +25,8 @@ async def check_embed_is_admin_only(embed, ckey):
         lines = text.splitlines()
         for line in lines:
             lower_line = line.lower()
-            if "admin only" in lower_line and ckey.lower() in lower_line:
+            admin_only = ["admin only", "только админ"]
+            if lower_line in admin_only and ckey.lower() in lower_line:
                 return False
 
     return True
