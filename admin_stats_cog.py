@@ -6,11 +6,11 @@ from discord.ext import commands
 
 async def form(count):
     if count % 10 == 1 and count % 100 != 11:
-        return f"найден {count} ахелп"
+        return f"Был найден {count} ахелп"
     elif 2 <= count % 10 <= 4 and (count % 100 < 10 or count % 100 >= 20):
-        return f"найдено {count} ахелпа"
+        return f"Было найдено {count} ахелпа"
     else:
-        return f"найдено {count} ахелпов"
+        return f"Было найдено {count} ахелпов"
 
 async def check_embed_is_admin_only(embed, ckey):
     text_to_check = []
@@ -86,13 +86,13 @@ class AdminStatsCog(commands.Cog):
         answer = discord.Embed(title=f"{ckey} | {channel.name} | {date}", colour=0x41f096)
 
         answer.add_field(name="Общее количество", inline=False,
-            value=f"Был {await form(all_ahelps_with_mention)}"
+            value=f"{await form(all_ahelps_with_mention)}"
         )
         answer.add_field(name="Без Admin Only", inline=False,
-            value=f"Было {await form(ahelps_without_admin_only)}"
+            value=f"{await form(ahelps_without_admin_only)}"
         )
         answer.add_field(name="Admin Only", inline=False,
-            value=f"Было {await form(ahelps_with_admin_only)}"
+            value=f"{await form(ahelps_with_admin_only)}"
         )
 
         await ctx.respond(embed=answer, ephemeral=True)
